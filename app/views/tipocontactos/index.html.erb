@@ -1,0 +1,35 @@
+<div class="ui container">
+
+<p id="notice"><%= notice %></p>
+
+<h1>Tipo contacto</h1>
+
+  <table class="ui unstackable table">
+    <thead>
+    <tr>
+
+      <th>Tipo</th>
+      <th>Mostrar</th>
+      <th>Editar</th>
+      <th>Eliminar</th>
+
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @tipocontactos.each do |tipocontacto| %>
+        <tr>
+          <td><%= tipocontacto.nombre %></td>
+          <td><%= link_to 'Mostrar', tipocontacto %></td>
+          <td><%= link_to 'Editar', edit_tipocontacto_path(tipocontacto) %></td>
+          <td><%= link_to 'eliminar', tipocontacto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+    <% end %>
+    </tbody>
+
+  </table>
+
+<br>
+
+<%= link_to 'Nuevo Tipo de contacto', new_tipocontacto_path %>
+</div>

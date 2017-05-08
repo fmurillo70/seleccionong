@@ -1,0 +1,38 @@
+<div class="ui container">
+
+<p id="notice"><%= notice %></p>
+
+<h1>Competencias</h1>
+
+
+
+
+  <table class="ui unstackable table">
+    <thead>
+    <tr>
+
+      <th>Nombre</th>
+      <th>Mostrar</th>
+      <th>Editar</th>
+      <th>Eliminar</th>
+
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @aptitudes.each do |aptitude| %>
+        <tr>
+          <td><%= aptitude.nombre %></td>
+          <td><%= link_to 'Mostrar', aptitude %></td>
+          <td><%= link_to 'Editar', edit_aptitude_path(aptitude) %></td>
+          <td><%= link_to 'Elimar', aptitude, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+
+<br>
+
+<%= link_to 'Nueva Competencia', new_aptitude_path %>
+</div>

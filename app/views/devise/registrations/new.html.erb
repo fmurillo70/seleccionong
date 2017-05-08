@@ -1,0 +1,661 @@
+<style>
+  .primerDelRow {
+    box-shadow: -1px 0 0 0 rgba(34, 36, 38, .15), 1px 0 0 0 rgba(34, 36, 38, .15) !important;
+  }
+</style>
+
+
+
+
+<div class="ui container" style="margin-top: 25px;">
+
+  <h2 style="text-align: center;">Registrate como voluntario</h2>
+
+
+  <%= form_for(resource, as: resource_name, url: "/voluntario/create", html: {class: "ui form"}) do |f| %>
+      <%= devise_error_messages! %>
+
+      <div class="ui divided grid">
+
+        <div class="ui divider" style="width: 100%;"></div>
+
+        <div class=" eight wide column primerDelRow">
+          <div class="field">
+            <label for="">Nombres</label>
+            <%= text_field_tag :nombres, nil, autofocus: true, placeholder: "Nombres" %>
+          </div>
+        </div>
+
+        <div class=" eight wide column">
+          <div class="field">
+            <label for="">Apellidos</label>
+            <%= text_field_tag :apellidos, nil, placeholder: "Apellidos" %>
+          </div>
+        </div>
+
+        <div class="ui divider" style="width: 100%;"></div>
+
+        <div class="three wide column primerDelRow">
+          <div class="field">
+            <label for="">Tipo de documento</label>
+            <select class="ui fluid search dropdown" name="tipo_documentos_id" id="tipo_documentos_id">
+              <option value="">Tipo de Documento</option>
+              <% @tipodocumentos.each do |p| %>
+                  <option value="<%= p.id %>"><%= p.nombre %></option>
+              <% end %>
+
+            </select>
+          </div>
+        </div>
+
+        <div class="five wide column">
+          <div class="field">
+            <label for="">Numero de documento</label>
+            <%= text_field_tag :numdoc, nil, autofocus: true, placeholder: "Numero de Documento" %>
+          </div>
+        </div>
+
+        <div class="eight wide column">
+          <label for="">Fecha de nacimiento</label>
+          <div class="three fields">
+            <div class="field">
+              <input type="text" name="daybirth" maxlength="2" placeholder="Dia" id="day">
+            </div>
+            <div class="field">
+              <select class="ui fluid search dropdown" name="monthbirth" id="mon">
+                <option value="">Mes</option>
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+              </select>
+            </div>
+            <div class="field">
+              <input type="text" name="yearbirth" maxlength="4" placeholder="Año" id="year">
+            </div>
+          </div>
+        </div>
+
+        <div class="ui divider" style="width: 100%;"></div>
+
+        <div class="three wide column primerDelRow">
+
+          <div class="field">
+            <label for="">Sexo</label>
+            <select class="ui fluid search dropdown" name="tipo_de_sexos_id" id="tipo_de_sexos_id">
+              <option value="">Sexo</option>
+              <% @sexos.each do |p| %>
+                  <option value="<%= p.id %>"><%= p.nombre %></option>
+              <% end %>
+
+
+            </select>
+          </div>
+        </div>
+
+        <div class="five wide column">
+          <div class="field">
+            <label>Nacionalidad</label>
+            <div class="ui fluid search selection dropdown">
+              <input type="hidden" name="paises_id" id="paises_id">
+              <i class="dropdown icon"></i>
+              <div class="default text">Selecciona tu Nacionalidad</div>
+              <div id="nacionalidad" class="menu">
+                <% @paises.each do |p| %>
+                    <div class="item" data-value="<%= p.id %>"><i class="<%= p.bandera %> flag"></i> <%= p.nombre %>
+                    </div>
+                <% end %>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class=" eight wide column">
+          <div class="field">
+            <%= f.label :email %>
+            <%= email_field_tag :email %>
+          </div>
+        </div>
+
+        <div class="ui divider" style="width: 100%;"></div>
+
+        <div class="four wide column primerDelRow ">
+
+          <div class="field">
+            <label>Ubicacion de vivienda</label>
+            <div class="ui fluid search selection dropdown">
+              <input type="hidden" name="ubicacionviviendas_id">
+              <i class="dropdown icon"></i>
+              <div class="default text">Ubicacion de vivienda</div>
+              <div id="nacionalidad" class="menu">
+                <% @ubicacionvivienda.each do |p| %>
+                    <div class="item" data-value="<%= p.id %>"> <%= p.nombre %></div>
+                <% end %>
+
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="four wide column">
+
+          <div class="field">
+            <label>Departamento</label>
+            <div class="ui fluid search selection dropdown">
+              <input type="hidden" name="departamento" id="departamento">
+              <i class="dropdown icon"></i>
+              <div class="default text">Departamento</div>
+              <div id="departamentos" class="menu">
+                <div class="item" data-value="co"> Antonio Narino</div>
+                <div class="item" data-value="us"> Chapinero</div>
+                <div class="item" data-value="us"> Puente</div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="four wide column">
+
+          <div class="field">
+            <label>Ciudad</label>
+            <div class="ui fluid search selection dropdown">
+              <input type="hidden" name="ciudad">
+              <i class="dropdown icon"></i>
+              <div class="default text">Ciudad</div>
+              <div id="ciudades" class="menu">
+
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class=" four wide column">
+          <div class="field">
+            <label for="">Direccion de Residencia</label>
+            <%= text_field_tag :direccion, nil, placeholder: "Direccion de Residencia" %>
+          </div>
+        </div>
+
+        <div class="ui divider" style="width: 100%;"></div>
+
+        <div class="four wide column primerDelRow">
+
+          <div class="field">
+            <label>Tenencia de la Vivienda</label>
+            <div class="ui fluid search selection dropdown">
+              <input type="hidden" name="tenenciaviviendas_id">
+              <i class="dropdown icon"></i>
+              <div class="default text">Tenencia de la Vivienda</div>
+              <div id="nacionalidad" class="menu">
+
+                <% @tenenciavivienda.each do |p| %>
+                    <div class="item" data-value="<%= p.id %>"> <%= p.nombre %></div>
+                <% end %>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="four wide column ">
+
+          <div class="field">
+            <label>Tipo de Contacto</label>
+            <div class="ui fluid search selection dropdown">
+              <input type="hidden" name="tipocontactos_id">
+              <i class="dropdown icon"></i>
+              <div class="default text">Celular, Numero fijo, etc...</div>
+              <div id="nacionalidad" class="menu">
+
+
+                <% @tipocontacto.each do |p| %>
+                    <div class="item" data-value="<%= p.id %>"> <%= p.nombre %></div>
+                <% end %>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class=" four wide column">
+          <div class="field">
+            <label for="">Numero de contacto</label>
+            <%= text_field_tag :numerocontacto, nil, placeholder: "Numero" %>
+          </div>
+        </div>
+
+        <div class="four wide column ">
+
+          <div class="field">
+            <label>Religion</label>
+            <div class="ui fluid search selection dropdown">
+              <input type="hidden" name="religions_id">
+              <i class="dropdown icon"></i>
+              <div class="default text">Religion</div>
+              <div id="nacionalidad" class="menu">
+                <% @religion.each do |p| %>
+                    <div class="item" data-value="<%= p.id %>"> <%= p.nombre %></div>
+                <% end %>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="ui divider" style="width: 100%;"></div>
+
+        <div class="four wide column primerDelRow">
+
+          <div class="field">
+            <label>Estado Civil</label>
+            <div class="ui fluid search selection dropdown">
+              <input type="hidden" name="tipo_estado_civils_id">
+              <i class="dropdown icon"></i>
+              <div class="default text">Estado Civil</div>
+              <div id="nacionalidad" class="menu">
+
+                <% @estadocivil.each do |p| %>
+                    <div class="item" data-value="<%= p.id %>"> <%= p.nombre %></div>
+                <% end %>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="four wide column">
+
+          <div class="field">
+            <br>
+            <div class="ui checkbox">
+              <input type="checkbox" tabindex="0" class="hidden" name="actualmenteestudia">
+              <label>Actualmente Estudiante?</label>
+            </div>
+          </div>
+        </div>
+
+        <div class=" four wide column">
+          <div class="field">
+            <label for="">Programa Estudio</label>
+            <input type="text" name="programaestudio" id="programaestudio">
+          </div>
+        </div>
+
+
+        <div class=" four wide column">
+          <div class="field">
+            <label for="">Ultimo titulo obtenido</label>
+            <input type="text" placeholder="Ultimo titulo obtenido" name="ultimotitulo" id="ultimotitulo">
+
+          </div>
+        </div>
+
+        <div class="ui divider" style="width: 100%;"></div>
+        <div class="four wide column primerDelRow">
+
+          <div class="field">
+            <label>Nivel de estudio</label><br>
+            <div class="ui fluid search selection dropdown">
+              <input type="hidden" name="tipoestudio_id" id="tipoestudio_id">
+              <i class="dropdown icon"></i>
+              <div class="default text">Nivel de estudio</div>
+              <div id="nacionalidad" class="menu">
+
+
+                <% @tipoestudio.each do |p| %>
+                    <div class="item" data-value="<%= p.id %>"> <%= p.nombre %></div>
+                <% end %>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="four wide column">
+
+          <div class="field">
+            <label>Horario Estudio</label><br>
+            <div class="ui fluid search selection dropdown">
+              <input type="hidden" name="jornadaestudio_id" id="jornadaestudio_id">
+              <i class="dropdown icon"></i>
+              <div class="default text">Horario Estudio</div>
+              <div id="nacionalidad" class="menu">
+
+                <% @jornadaestudio.each do |p| %>
+                    <div class="item" data-value="<%= p.id %>"> <%= p.nombre %></div>
+                <% end %>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="four wide column">
+          <div class="field">
+            <label for="">Tipo de Eps</label>
+            <select class="ui fluid search dropdown" name="tipo_eps" id="tipo_eps">
+              <option value="">Tipo de Eps</option>
+
+              <option value="Contributivo">Contributivo</option>
+              <option value="Subsidiado">Subsidiado</option>
+
+
+            </select>
+          </div>
+
+        </div>
+        <div class="four wide column">
+          <div class="field">
+            <label for="">Estrato</label>
+            <select class="ui fluid search dropdown" name="estrato" id="estrato">
+              <option value="">Estrato</option>
+
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+
+
+            </select>
+          </div>
+
+        </div>
+
+        <div class="ui divider" style="width: 100%;"></div>
+
+
+        <div class="four wide column primerDelRow">
+
+          <div class="field">
+            <br>
+            <div class="ui checkbox">
+              <input type="checkbox" tabindex="0" class="hidden" name="actualmentetrabaja" id="actualmentetrabaja">
+              <label>Actualmente Trabaja?</label>
+            </div>
+          </div>
+        </div>
+
+        <div class=" four wide column">
+          <div class="field">
+            <label for="">Nombre persona de contacto</label>
+            <%= text_field_tag :nombrepersona, nil, autofocus: true, placeholder: "Nombres" %>
+          </div>
+        </div>
+
+        <div class=" four wide column">
+          <div class="field">
+            <label for="">Telefono persona de contacto</label>
+            <%= text_field_tag :telpersona, nil, autofocus: true, placeholder: "Telefono" %>
+          </div>
+        </div>
+
+        <div class=" four wide column">
+          <div class="field">
+            <label for="">Relacion persona de contacto</label>
+            <%= text_field_tag :relacionpersona, nil, autofocus: true, placeholder: "Relacion" %>
+          </div>
+        </div>
+
+
+        <div class="ui divider" style="width: 100%;"></div>
+
+        <div class="four wide column primerDelRow ">
+          <div class="field">
+            <%= f.label :clave %>
+            <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %> Caracteres minimo)</em>
+            <% end %><br/>
+            <%= password_field_tag :password, nil, autocomplete: "off" %>
+          </div>
+        </div>
+        <div class="four wide column">
+          <div class="field">
+            <%= f.label :confirmar_clave %><br/>
+            <%= password_field_tag :password_confirmation, nil, autocomplete: "off" %>
+          </div>
+        </div>
+
+
+        <div class="ui divider" style="width: 100%;"></div>
+
+
+        <div class="sixteen wide column primerDelRow">
+          <div class="field">
+            <label for=""> </label>
+            <%= f.submit "Registrar", class: "ui primary button btnLogin" %>
+          </div>
+        </div>
+      </div>
+  <% end %>
+
+
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+    $('.ui.dropdown').dropdown();
+    $('.ui.checkbox').checkbox();
+</script>
+
+<style>
+  #nacionalidad.menu .item {
+    text-align: left;
+  }
+</style>
+
+<script type="text/javascript" charset="utf-8">
+
+
+    var nombres = null;
+    var apellidos = null;
+    var tipodoc = null;
+    var numdoc = null;
+    var fechanac = null;
+    var sexo = null;
+    var nacionalidad = null;
+    var nivel_de_estudio_academico = null;
+    var ocupacion = null;
+    var trabaja = null;
+    var email = null;
+    var estrato = null;
+    var tipoeps = null;
+    var estudio = null;
+    var jornada = null;
+
+    $('#new_user').submit(function () {
+
+
+        var   nombrepersona = $('#nombrepersona').val();
+        var relacionpersona = $('#relacionpersona').val();
+        var ultimotitulo = $('#ultimotitulo').val();
+
+
+        var nombrepersonavalido = /^[a-zA-Z\sñáéíóúü]+$/.test(nombrepersona);
+        var relacionpersonavalido = /^[a-zA-Z\sñáéíóúü]+$/.test(relacionpersona);
+        var ultimotitulovalido = /^[a-zA-Z\sñáéíóúü]+$/.test(ultimotitulo);
+
+
+        if (ultimotitulo && !ultimotitulovalido) {
+            alert("El ultimo titulo obtenido debe contener unicamente letras");
+            return false
+        }
+
+        if (nombrepersona && !nombrepersonavalido) {
+            alert("El nombre de la persona de contacto debe contener unicamente letras");
+            return false
+        }
+
+        if (relacionpersona && !relacionpersonavalido) {
+            alert("La relacion con la persona de contacto debe contener unicamente letras");
+            return false
+        }
+
+        nombres = $('#nombres').val();
+
+
+        var nombrevalido = /^[a-zA-Z\sñáéíóúü]+$/.test(nombres);
+        if (!nombres) {
+            alert("Los nombres son obligatorios");
+            return false
+        }
+        if (nombres && !nombrevalido) {
+            alert("El nombre debe contener unicamente letras");
+            return false
+        }
+
+        apellidos = $('#apellidos').val();
+        var apellidovalido = /^[a-zA-Z\sñáéíóúü]+$/.test(apellidos);
+        if (!apellidos) {
+            alert("Los apellidos son obligatorios");
+            return false
+        }
+        if (apellidos && !apellidovalido) {
+            alert("El apellido debe contener unicamente letras");
+            return false
+        }
+
+
+
+        tipodoc = $('#tipo_documentos_id').val();
+        if (!tipodoc) {
+            alert("El tipo de documento es obligatorio");
+            return false
+        }
+        sexo = $('#tipo_de_sexos_id').val();
+        if (!sexo) {
+            alert("El sexo es obligatorio");
+            return false
+        }
+
+        nacionalidad = $('#paises_id').val();
+        if (!nacionalidad) {
+            alert("La nacionalidad es obligatoria");
+            return false
+        }
+        nivel_de_estudio_academico = $('#tipoestudio_id').val();
+        if (!nivel_de_estudio_academico) {
+            alert("El nivel de estudios es obligatorio");
+            return false
+        }
+
+        ocupacion = $('#programaestudio').val();
+        if (!ocupacion) {
+            alert("El programa de estudio es obligatorio");
+            return false
+        }
+
+
+        trabaja = $('#actualmentetrabaja').val();
+        if (!trabaja) {
+            alert("Trabaja?");
+            return false
+        }
+
+        estrato = $('#estrato').val();
+        if (!estrato) {
+            alert("El estrato es obligatorio");
+            return false
+        }
+
+
+        tipoeps = $('#tipo_eps').val();
+        if (!tipoeps) {
+            alert("El tipo de EPS es obligatorio");
+            return false
+        }
+
+        //estudio = $('#nombres').val();
+        jornada = $('#jornadaestudio_id').val();
+
+        if (!jornada) {
+            alert("La jornada de estudio es obligatoria");
+            return false
+        }
+
+        numdoc = $('#numdoc').val();
+        if (!numdoc) {
+            alert("El numero de documento es obligatorio");
+            return false
+        }
+        email = $('#email').val();
+        if (!email) {
+            alert("El email es obligatorio");
+            return false
+        }
+
+
+        var anio = $('#year').val();
+
+        if (anio && anio > 1999) {
+            alert("La fecha de nacimiento no es valida");
+            return false
+        }
+
+        fechanac = $('#day').val() && $('#mon').val() && $('#year').val();
+
+        if (!fechanac) {
+            alert("La fecha de nacimiento es obligatoria");
+            return false
+        }
+        //day
+        //mon
+        //year
+
+
+    });
+
+
+    $('#departamentos').html('');
+    $.get("/v1/departamentos.json")
+        .done(function (data) {
+
+            $.each(data, function (key, departamento) {
+
+                //  console.log( departamento)
+                $('#departamentos').append('<div class="item" data-value="' + departamento.id + '"> ' + departamento.nombre + '</div>')
+            });
+        });
+
+
+    $('#departamento').change(function () {
+        $('#ciudades').html('');
+        var id = Number($(this).val());
+
+
+        $.get("/v1/municipios/" + id + ".json")
+            .done(function (data) {
+
+
+                $.each(data, function (key, municipio) {
+                    $('#ciudades').append('<div class="item" data-value="' + municipio.id + '"> ' + municipio.nombre + '</div>')
+                });
+            });
+
+
+    })
+
+
+</script>
+
+
+<%= render "devise/shared/links" %>

@@ -1,0 +1,195 @@
+<%= form_for(resource, as: resource_name, url: "/subirdocumentos", html: {method: :put, multipart: true, class: "ui form"}) do |form| %>
+
+    <div class="ui container" style="margin-top: 25px;">
+
+      <% if current_user.esvoluntario %>
+          <% if current_user.voluntario.certestudios_file_name.to_s.empty? or current_user.voluntario.certexperiencia_file_name.to_s.empty? or current_user.voluntario.docidentidad_file_name.to_s.empty? %>
+              <h2 style="text-align: center;">Por favor adjunte los siguientes documentos</h2>
+          <% else %>
+              <h2 style="text-align: center;"> Sus documentos están en revisión, cuando sean aprobados nos
+                contactaremos</h2>
+          <% end %>
+      <% end %>
+
+      <% if current_user.esong %>
+          <% if current_user.ong.rut_file_name.to_s.empty? or
+              current_user.ong.camaracomercio_file_name.to_s.empty? or
+              current_user.ong.documentoidentidad_file_name.to_s.empty? %>
+              <h2 style="text-align: center;">Por favor adjunte los siguientes documentos</h2>
+          <% else %>
+              <h2 style="text-align: center;"> Sus documentos están en revisión, cuando sean aprobados nos
+                contactaremos</h2>
+          <% end %>
+      <% end %>
+      <div class="ui centered divided grid">
+        <div class="row">
+          <div class="column six wide">
+            <div class="ui divided grid">
+
+
+              <% if current_user.esvoluntario %>
+                  <% if current_user.voluntario.certestudios_file_name.to_s.empty? or
+                      current_user.voluntario.certexperiencia_file_name.to_s.empty? or
+                      current_user.voluntario.docidentidad_file_name.to_s.empty? %>
+
+                      <div class="row">
+                        <div class=" sixteen wide column">
+                          <div class="field">
+                            <% if current_user.voluntario.certestudios_file_name.to_s.empty? %>
+                                <label for="">Certificado de Estudios</label>
+                                <%= form.file_field :certestudios, data: {max_file_size: 2.megabytes}, onchange: "validateFiles(this);" %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="ui divider" style="width: 100%;"></div>
+                      <div class="row">
+                        <div class=" sixteen wide column">
+                          <div class="field">
+                            <% if current_user.voluntario.certexperiencia_file_name.to_s.empty? %>
+                                <label for="">Certificado de Experiencia laboral</label>
+                                <%= form.file_field :certexperiencia, data: {max_file_size: 5.megabytes}, onchange: "validateFiles(this);" %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="ui divider" style="width: 100%;"></div>
+                      <div class="row">
+                        <div class=" sixteen wide column">
+                          <div class="field">
+                            <% if current_user.voluntario.docidentidad_file_name.to_s.empty? %>
+                                <label for="">Fotocopia del Documento de Identidad</label>
+                                <%= form.file_field :docidentidad, data: {max_file_size: 2.megabytes}, onchange: "validateFiles(this);" %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="ui divider" style="width: 100%;"></div>
+                      <div class="row">
+                        <div class=" sixteen wide column">
+                          <div class="field">
+                            <% if current_user.voluntario.tarjetaprofesional_file_name.to_s.empty? %>
+                                <label for="">Tarjeta Profesional</label>
+                                <%= form.file_field :tarjetaprofesional, data: {max_file_size: 2.megabytes}, onchange: "validateFiles(this);" %>
+                            <% end %>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class=" sixteen wide column">
+                          <div class="field">
+                            <input type="submit" value="Enviar" style="width: 100%;" class="ui primary button btnLogin">
+                          </div>
+                        </div>
+                      </div>
+                  <% end %>
+
+
+              <% end %>
+            </div>
+            <div class="ui divided grid">
+
+              <% if current_user.esong %>
+                  <% if current_user.ong.rut_file_name.to_s.empty? or
+                      current_user.ong.camaracomercio_file_name.to_s.empty? or
+                      current_user.ong.documentoidentidad_file_name.to_s.empty? %>
+
+                      <div class="ui divider" style="width: 100%;"></div>
+                      <div class="row">
+                        <div class=" sixteen wide column">
+                          <div class="field">
+                            <% if current_user.ong.camaracomercio_file_name.to_s.empty? %>
+                                <label for="">Certificado de Camara y Comercio</label>
+                                <%= form.file_field :camaracomercio, data: {max_file_size: 2.megabytes}, onchange: "validateFiles(this);" %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="ui divider" style="width: 100%;"></div>
+                      <div class="row">
+                        <div class=" sixteen wide column">
+                          <div class="field">
+                            <% if current_user.ong.rut_file_name.to_s.empty? %>
+                                <label for="">Rut</label>
+                                <%= form.file_field :rut, data: {max_file_size: 2.megabytes}, onchange: "validateFiles(this);" %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="ui divider" style="width: 100%;"></div>
+                      <div class="row">
+                        <div class=" sixteen wide column">
+
+
+                          <div class="field">
+                            <% if current_user.ong.documentoidentidad_file_name.to_s.empty? %>
+                                <label for="">Documento de Identidad Representante Legal</label>
+                                <%= form.file_field :documentoidentidad, data: {max_file_size: 2.megabytes}, onchange: "validateFiles(this);" %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="ui divider" style="width: 100%;"></div>
+                      <div class="field">
+                        <input type="submit" value="Enviar" style="width: 100%;">
+                      </div>
+                  <% end %>
+
+
+              <% end %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+    function validateFiles(inputFile) {
+        var maxExceededMessage = "El archivo excede el peso maximo (5MB)";
+        var extErrorMessage = "Solo se admiten imagenes o archivos pdf ";
+        var allowedExtension = ["jpg", "jpeg", "png", "pdf"];
+
+        var extName;
+        var maxFileSize = $(inputFile).data('max-file-size');
+        var sizeExceeded = false;
+        var extError = false;
+
+        $.each(inputFile.files, function () {
+            if (this.size && maxFileSize && this.size > parseInt(maxFileSize)) {
+                sizeExceeded = true;
+            }
+
+            extName = this.name.split('.').pop();
+            if ($.inArray(extName, allowedExtension) == -1) {
+                extError = true;
+            }
+
+        });
+        if (sizeExceeded) {
+            window.alert(maxExceededMessage);
+            $(inputFile).val('');
+        }
+
+
+        if (extError) {
+            window.alert(extErrorMessage);
+            $(inputFile).val('');
+        }
+
+    }
+</script>

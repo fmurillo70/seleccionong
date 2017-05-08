@@ -1,0 +1,403 @@
+<p id="notice"><%= notice %></p>
+<% if current_user.superadmin %>
+    <a class="ui primary button btnNuevoVol" href="/newadmin"> Crear Usuario</a>
+<% end %>
+
+
+
+<div class="ui top attached tabular menu">
+  <a class="item active" data-tab="first">Verificar ONG</a>
+  <a class="item" data-tab="forth"> ONG activas</a>
+  <a class="item" data-tab="second">Verificar Voluntarios</a>
+  <a class="item" data-tab="third">Voluntarios activos</a>
+
+  <% if current_user.superadmin %>
+      <a class="item" data-tab="fifth">Todos los Usuarios</a>
+  <% end %>
+</div>
+<% if current_user.superadmin %>
+    <div class="ui bottom attached tab segment" data-tab="fifth">
+      <%= link_to 'Reporte de ingresos al sistema', exingresos_path(format: :xlsx) %>
+      <!--
+
+      <br>
+
+-->
+
+      <table class="ui celled table">
+        <thead>
+        <tr>
+          <th>Nombre</th>
+
+          <th>Tipo de Usuario</th>
+          <th>Aprobado</th>
+          <th>
+
+          </th>
+          <th></th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% @usuarios.each do |u| %>
+
+            <tr>
+
+              <% if u.esvoluntario %>
+                  <td> <%= u.voluntario.nombres %> <%= u.voluntario.apellidos %></td>
+              <% elsif u.esong %>
+                  <td> <%= u.ong.nombre %> </td>
+              <% elsif u.esadmin %>
+                  <td> <%= u.nombreadmin %> <%= u.apellidoadmin %>  </td>
+              <% end %>
+
+              <% if u.esvoluntario %>
+                  <td>Voluntario</td>
+              <% elsif u.esong %>
+                  <td> ONG</td>
+              <% elsif u.esadmin %>
+                  <td> Administrador</td>
+              <% end %>
+
+
+              <% if u.aprobado %>
+                  <td> Aprobado</td>
+              <% else %>
+                  <td>No Aprobado</td>
+              <% end %>
+
+              <td>
+                <% if current_user.id != u.id %>
+                    <form class="ui form" action="/home/bloquear" method="post">
+                      <input type="hidden" name="id" value="<%= u.id %>"/>
+                      <button>
+                        <% if u.aprobado %>
+                            Bloquear
+                        <% else %>
+                            Activar
+                        <% end %>
+                      </button>
+                    </form>
+                <% end %>
+              </td>
+
+
+
+              <% if u.esadmin %>
+                  <td>
+                    <a href="/editadmin/<%= u.id %>"> Editar</a>
+                  </td>
+              <% elsif u.esvoluntario %>
+                  <td>
+                    <!--  <%= link_to 'Reporte de evaluaciones', "/exevaluacion/#{u.id}.xlsx" %>-->
+                  </td>
+              <% else %>
+                  <td></td>
+              <% end %>
+
+              <% if current_user.id != u.id %>
+                  <td>
+                    <%= link_to 'Eliminar', "/admindestroy/#{u.id}", method: :delete, data: {confirm: 'Estas seguro que deseas eliminar el usuario?'} %>
+
+                  </td>
+              <% else %>
+                  <td></td>
+              <% end %>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+<% end %>
+<div class="ui bottom attached tab segment active" data-tab="first">
+  <%= link_to 'Reporte de ONG pendientes', exaproong_path(format: :xlsx) %>
+  <table class="ui celled table">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+
+      <th>RUT</th>
+      <th>Camara y Comercio</th>
+      <th>Documento de Identidad Representante</th>
+      <th>Aprobar</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% @ongverificar.each do |u| %>
+
+        <tr>
+          <td><%= u.ong.nombre %></td>
+          <% if !(u.ong.rut.url.end_with? "missing.png") %>
+              <td><a href="<%= u.ong.rut.url %>" target="_blank">Link</a></td>
+          <% else %>
+              <td>No se ha adjuntado el documento</td>
+          <% end %>
+
+          <% if !(u.ong.camaracomercio.url.end_with? "missing.png") %>
+
+              <td>
+
+                <a href="<%= u.ong.camaracomercio.url %>" target="_blank">Link</a></td>
+          <% else %>
+              <td>No se ha adjuntado el documento</td>
+          <% end %>
+          <% if !(u.ong.documentoidentidad.url.end_with? "missing.png") %>
+              <td>
+
+                <a href="<%= u.ong.documentoidentidad.url %>" target="_blank">Link</a></td>
+          <% else %>
+              <td>No se ha adjuntado el documento</td>
+          <% end %>
+
+          <td>
+
+            <button class="ui button modalong" data-id="<%= u.id %>">Aprobar</button>
+
+          </td>
+
+
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="ui bottom attached tab segment" data-tab="second">
+
+  <%= link_to 'Reporte de Voluntarios pendientes', exaprovol_path(format: :xlsx) %>
+  <table class="ui celled table">
+    <thead>
+    <tr>
+      <th>Nombres</th>
+      <th>Apellidos</th>
+      <th>Certificado de Estudios</th>
+      <th>Certificado de Experiencia laboral</th>
+      <th>Fotocopia del Documento de Identidad</th>
+      <th>Tarjeta Profesional</th>
+      <th>Aprobar</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% @usuariosverificar.each do |u| %>
+
+        <tr>
+          <td><%= u.voluntario.nombres %></td>
+          <td><%= u.voluntario.apellidos %></td>
+
+          <% if !(u.voluntario.certestudios.url.end_with? "missing.png") %>
+
+
+              <td><a href="<%= u.voluntario.certestudios.url %>" target="_blank">Link</a></td>
+
+          <% else %>
+              <td>No se ha adjuntado el documento</td>
+          <% end %>
+
+          <% if !(u.voluntario.certexperiencia.url.end_with? "missing.png") %>
+
+
+              <td>
+
+                <a href="<%= u.voluntario.certexperiencia.url %>" target="_blank">Link</a></td>
+          <% else %>
+              <td>No se ha adjuntado el documento</td>
+          <% end %>
+          <% if !(u.voluntario.docidentidad.url.end_with? "missing.png") %>
+
+
+              <td><a href="<%= u.voluntario.docidentidad.url %>" target="_blank"></a>Link</td>
+
+          <% else %>
+              <td>No se ha adjuntado el documento</td>
+          <% end %>
+          <% if !(u.voluntario.tarjetaprofesional.url.end_with? "missing.png") %>
+
+
+              <td><a href="<%= u.voluntario.tarjetaprofesional.url %>" target="_blank">Link</a></td>
+
+          <% else %>
+              <td>No se ha adjuntado el documento</td>
+          <% end %>
+
+
+
+          <td>
+
+            <button class="ui button modalusuarios" data-id="<%= u.id %>">Aprobar</button>
+
+          </td>
+
+
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="ui bottom attached tab segment" data-tab="third">
+  <%= link_to 'Reporte de voluntarios y convocatorias', exvoluntarios_path(format: :xlsx) %>
+  <br>
+  <%= link_to 'Reporte de voluntarios y pruebas', exevaluacion_path(format: :xlsx) %>
+  <table class="ui celled table">
+    <thead>
+    <tr>
+      <th>Nombres</th>
+      <th>Apellidos</th>
+      <th>Acciones</th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <% @usuariosactivos.each do |u| %>
+
+        <tr>
+          <td><%= u.voluntario.nombres %></td>
+          <td><%= u.voluntario.apellidos %></td>
+
+          <td><a href="/home/voluntario/<%= u.id %>">Ver detalles</a></td>
+
+
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="ui bottom attached tab segment" data-tab="forth">
+
+  <%= link_to 'Reporte de ONG', exong_path(format: :xlsx) %>
+  <table class="ui celled table">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+
+      <th>Acciones</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <% @ongactivos.each do |u| %>
+
+        <tr>
+          <td><%= u.ong.nombre %></td>
+          <td><a href="/home/ong/<%= u.id %>">Ver detalles</a></td>
+
+
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+
+<div class="ui modal ongong">
+
+  <i class="close icon"></i>
+  <div class="header">
+    Aprobar ONG
+  </div>
+
+  <div class="image content">
+    <div class="ui medium image">
+      <img src="/imgs/chris.jpg">
+    </div>
+
+    <div class="description">
+
+      <div class="ui header">Por favor escribe un comentario al aprobar la ONG</div>
+
+      <form class="ui form" action="/home/aprobacion/" method="post">
+        <div class="field">
+          <label>Observacion</label>
+          <input type="hidden" name="id" id="idong" value="">
+          <input type="hidden" name="user[aprobado]" value="<%= true %>">
+          <input type="text" name="user[observacion]" placeholder="Observacion">
+          <input type="submit" id="submitong" style="display: none;">
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  <div class="actions">
+    <div class="ui black deny button">
+      Cancelar
+    </div>
+    <label for="submitong" class="ui positive right labeled icon button">
+      Aprobar
+      <i class="checkmark icon"></i>
+    </label>
+  </div>
+
+</div>
+
+
+<div class="ui modal voluvolu">
+
+  <i class="close icon"></i>
+  <div class="header">
+    Aprobar Voluntario
+  </div>
+
+  <div class="image content">
+    <div class="ui medium image">
+      <img src="/imgs/rachel.png">
+    </div>
+
+    <div class="description">
+
+      <div class="ui header">Por favor escribe un comentario al aprobar el voluntario</div>
+      <form class="ui form" action="/home/aprobacion/" method="post">
+        <div class="field">
+          <label>Observacion</label>
+          <input type="hidden" name="id" id="idvolu" value="">
+          <input type="hidden" name="user[aprobado]" value="<%= true %>">
+          <input type="text" name="user[observacion]" placeholder="Observacion">
+          <input type="submit" id="submitvolu" style="display: none;">
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  <div class="actions">
+    <div class="ui black deny button">
+      Cancelar
+    </div>
+    <label for="submitvolu" class="ui positive right labeled icon button">
+      Aprobar
+      <i class="checkmark icon"></i>
+    </label>
+  </div>
+
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    $('.menu .item')
+        .tab()
+    ;
+
+
+    $('.modalusuarios').click(function () {
+
+        $('#idvolu').val($(this).attr('data-id'));
+
+        $('.ui.modal.voluvolu')
+            .modal('show')
+        ;
+    })
+    $('.modalong').click(function () {
+
+        $('#idong').val($(this).attr('data-id'));
+
+        $('.ui.modal.ongong')
+            .modal('show')
+        ;
+    })
+</script>

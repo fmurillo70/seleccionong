@@ -1,0 +1,43 @@
+<div class="ui container">
+
+<style>
+  body {
+    background: #fff
+  }
+
+</style>
+
+<h1>Religiones</h1>
+
+<table class="ui unstackable table">
+  <thead>
+  <tr>
+    
+    <th>Nombre</th>
+    <th>Mostrar</th>
+    <th>Editar</th>
+    <th>Eliminar</th>
+
+  </tr>
+  </thead>
+  <tbody>
+
+  <tbody>
+  <% @religions.each do |religion| %>
+      <tr>
+        <td><%= religion.nombre %></td>
+        <td><%= link_to 'Mostrar', religion %></td>
+        <td><%= link_to 'Editar', edit_religion_path(religion) %></td>
+        <td><%= link_to 'Eliminar', religion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+
+  <% end %>
+
+  </tbody>
+</table>
+<p id="notice"><%= notice %></p>
+
+<br>
+
+<%= link_to 'Nueva Religion', new_religion_path %>
+  </div>

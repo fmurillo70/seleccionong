@@ -1,0 +1,40 @@
+<div class="ui container">
+
+<p id="notice"><%= notice %></p>
+
+<h1>Nivel academico</h1>
+
+<table class="ui unstackable table">
+
+  <thead>
+  <tr>
+
+    <th>Tipo</th>
+    <th>Mostrar</th>
+    <th>Editar</th>
+    <th>Eliminar</th>
+
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @nivelacademicos.each do |nivelacademico| %>
+      <tr>
+        <td><%= nivelacademico.actualmenteestudia %></td>
+        <td><%= nivelacademico.programaestudio %></td>
+        <td><%= nivelacademico.ultimotitulo %></td>
+        <td><%= nivelacademico.tipoestudio %></td>
+        <td><%= nivelacademico.jornadaestudio %></td>
+        <td><%= link_to 'Mirar', nivelacademico %></td>
+        <td><%= link_to 'Editar', edit_nivelacademico_path(nivelacademico) %></td>
+        <td><%= link_to 'Eliminar', nivelacademico, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+
+</table>
+
+<br>
+
+<%= link_to 'Nuevo Nivel Academico', new_nivelacademico_path %>
+</div>
